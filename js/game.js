@@ -12,29 +12,35 @@ class Building {
     }
 
     buy(amount) {
-        let Player = Game.Player;
-        if (Player.spendCookies(this.getCost(amount)) == true) {
+        let player = game.player;
+        if (player.spendCookies(this.getCost(amount)) == true) {
             this.amount += amount;
             this.cost = Math.round(this.cost * Math.pow(1.15, amount));
-            Game.Settings.RecalculateCPS = true;
-            let curIndex = Game.Utilities.GetBuildingIndexByName(this.name);
-            if (curIndex + 1 <= Game.Buildings.length - 1) {
-                let nextBuilding = Game.Buildings[curIndex + 1];
+            game.settings.recalculateCPS = true;
+            let curIndex = game.utilities.getBuildingIndexByName(this.name);
+            if (curIndex + 1 <= game.buildings.length - 1) {
+                let nextBuilding = game.buildings[curIndex + 1];
                 if (nextBuilding.locked == true) {
                     nextBuilding.locked = false;
-                    Game.ConstructShop();
+                    game.constructShop();
                 }
             }
         }
     }
 
+    setCost() {
+        for (let i = 0; i < this.amount; i++) {
+            this.cost = Math.round(this.cost * 1.15);
+        }
+    }
+
     buyUpgrade(name) {
-        let Player = Game.Player;
+        let player = game.player;
         this.upgrades.forEach(upgrade => {
             if (upgrade.name == name) {
-                if (Player.spendCookies(upgrade.cost) == true) {
+                if (player.spendCookies(upgrade.cost) == true) {
                     upgrade.owned = true;
-                    Game.Settings.RecalculateCPS = true;
+                    game.settings.recalculateCPS = true;
                     return;
                 }
             }
@@ -42,17 +48,17 @@ class Building {
     }
 
     calculateEffectOfUpgrades() {
+        let player = game.player;
         let multiplier = 1;
-        let Player = Game.Player;
-        let buildingCount = Game.Utilities.GetBuildingCount();
+        let buildingCount = game.utilities.getBuildingCount();
         this.specialCPS = 0;
-        if (this.name == 'Cursor') { Game.Player.AMPC = 1; }
+        if (this.name == 'Cursor') { game.player.aMPC = 1; }
         this.upgrades.forEach(upgrade => {
             if (upgrade.owned == true) {
                 if (upgrade.special == false) {
                     multiplier *= 2;
                     if (this.name == 'Cursor') {
-                        Player.AMPC *= 2;
+                        player.aMPC *= 2;
                     }
                 } else {
                     // Special casing for all special types of upgrades
@@ -61,7 +67,7 @@ class Building {
                         case 'Cursor':
                             let nonCursorBuildingCount = buildingCount - this.amount;
                             this.specialCPS += (upgrade.special * nonCursorBuildingCount) * this.amount;
-                            Player.AMPC += (upgrade.special * nonCursorBuildingCount);
+                            player.aMPC += (upgrade.special * nonCursorBuildingCount);
                     }
                 }
             }
@@ -78,53 +84,53 @@ class Building {
     getCost(amount) {
         let bulkCost = this.cost;
         let tempPrice = this.cost;
-        for (var i = 0; i < amount - 1; i++) {
+        for (let i = 0; i < amount - 1; i++) {
             bulkCost += Math.round(tempPrice *= 1.15);
         }
         return bulkCost;
     }
 
     generateMenuButton() {
-        return `<button onclick="Game.UpdateShop('${this.name}');">${this.name}</button>`;
+        return `<button onclick="game.updateShop('${this.name}');">${this.name}</button>`;
     }   
 
     generateBuyButtons() {
-        let Format = Game.Utilities.FormatNumber;
-        let HTML = '<div class="btnBuyGroup">';
-        HTML += `<button onclick="Game.BuyBuilding('${this.name}', 1);">Buy x1</br><b>${Format(this.cost)}</b></button>`
-        HTML += `<button onclick="Game.BuyBuilding('${this.name}', 5);">Buy x5</br><b>${Format(this.getCost(5))}</b></button>`;
-        HTML += `<button onclick="Game.BuyBuilding('${this.name}', 10);">Buy x10</br><b>${Format(this.getCost(10))}</b></button>`;
-        HTML += '</div>';
-        return HTML;
+        let format = game.utilities.formatNumber;
+        let html = '<div class="btnBuyGroup">';
+        html += `<button onclick="game.buyBuilding('${this.name}', 1);">Buy x1</br><b>${format(this.cost)}</b></button>`
+        html += `<button onclick="game.buyBuilding('${this.name}', 5);">Buy x5</br><b>${format(this.getCost(5))}</b></button>`;
+        html += `<button onclick="game.buyBuilding('${this.name}', 10);">Buy x10</br><b>${format(this.getCost(10))}</b></button>`;
+        html += '</div>';
+        return html;
     }
 
     generateUpgradeButtons() {
-        let HTML = '';
-        let NotMet = false;
+        let html = '';
+        let notMet = false;
         this.upgrades.forEach(upgrade => {
-            let Format = Game.Utilities.FormatNumber;
+            let format = game.utilities.formatNumber;
             if (upgrade.owned == false) {
                 if (upgrade.requirementMet(this.amount)) {
-                    HTML += `<button class="upgBtn" onclick="Game.BuyUpgrade('${this.name}', '${upgrade.name}')"><b>${upgrade.name}</b></br>${upgrade.desc}</br><b>${Format(upgrade.cost)}</b></button>`
+                    html += `<button class="upgBtn" onclick="game.buyUpgrade('${this.name}', '${upgrade.name}')"><b>${upgrade.name}</b></br>${upgrade.desc}</br><b>${format(upgrade.cost)}</b></button>`
                 } else {
-                    if (NotMet == false) {
-                        NotMet = true;
-                        HTML += `<div class="upgNext">Next upgrade in <b>${upgrade.limit - this.amount}</b> more ${this.name.toLowerCase()}(s)</div>`;
+                    if (notMet == false) {
+                        notMet = true;
+                        html += `<div class="upgNext">Next upgrade in <b>${upgrade.limit - this.amount}</b> more ${this.name.toLowerCase()}(s)</div>`;
                     }
                 }
             }
         });
-        return HTML;
+        return html;
     }
 
     generateShopHTML() {
-        let Format = Game.Utilities.FormatNumber;
-        let SingleEffect = (this.baseEffect * this.multiplier)
+        let format = game.utilities.formatNumber;
+        let singleEffect = (this.baseEffect * this.multiplier)
         if (this.specialCPS > 0) {
-            SingleEffect += (this.specialCPS / this.amount);
+            singleEffect += (this.specialCPS / this.amount);
         }
-        let HTML = `<b>${this.name}</b></br>You have <b>${this.amount}</b> ${this.name.toLowerCase()}(s).</br>Each ${this.name.toLowerCase()} produces <b>${Format(SingleEffect)}</b> cookie(s).</br>All of your ${this.name.toLowerCase()}(s) combined produces <b>${Format(this.effect)}</b> cookie(s).</br>${this.generateBuyButtons()}</br>${this.generateUpgradeButtons()}`;
-        return HTML;
+        let html = `<b>${this.name}</b></br>You have <b>${this.amount}</b> ${this.name.toLowerCase()}(s).</br>Each ${this.name.toLowerCase()} produces <b>${format(singleEffect)}</b> cookie(s).</br>All of your ${this.name.toLowerCase()}(s) combined produces <b>${format(this.effect)}</b> cookie(s).</br>${this.generateBuyButtons()}</br>${this.generateUpgradeButtons()}`;
+        return html;
     }
 }
 
@@ -153,8 +159,8 @@ class Player {
             Spent: 0,
             Clicked: 0
         }
-        this.AMPS = 0;
-        this.AMPC = 1;
+        this.aMPF = 0;
+        this.aMPC = 1;
     }
 
     earnCookie(amount) {
@@ -171,17 +177,18 @@ class Player {
     } 
 
     clickCookie() {
-        this.earnCookie(this.AMPC);
-        this.cookieStats.Clicked += this.AMPC;
+        this.earnCookie(this.aMPC);
+        this.cookieStats.Clicked += this.aMPC;
     }
 }
 
-var Game = {
-    Settings: {
-        Framerate: 30,
-        RecalculateCPS: true
+let game = {
+    settings: {
+        frameRate: 30,
+        recalculateCPS: true,
+        key: 'cookieclicker'
     },
-    Buildings: [
+    buildings: [
         // Generate all buildings here
         new Building('Cursor', 100, 0.1, [
             new Upgrade('Reinforced Index Finger', 100, 'Cursors and clicking are twice as efficient', 1),
@@ -356,30 +363,30 @@ var Game = {
             new Upgrade('Bunnypedes', 13000000000000000000000000000000000, 'Chancemakers are twice as efficient', 300)
         ]),
         new Building('Fractal Engine', 310000000000000000, 150000000000, [
-
+            new Upgrade('Metabakeries', 3100000000000000000, 'Fractal engines are twice as efficient', 1)
         ])
     ],
-    Utilities: {
+    utilities: {
         ShortNumbers: ['K', 'M', 'B', 'T', 'Qua', 'Qui', 'Sex', 'Sep', 'Oct', 'Non', 'Dec', 'Und', 'Duo', 'Tre', 'QuaD', 'QuiD', 'SexD', 'SepD', 'OctD', 'NonD', 'Vig'],
-        UpdateText: function(id, text) {
+        updateText: function(id, text) {
             $(id).html(text)
         },
-        FormatNumber: function(number) {
+        formatNumber: function(number) {
             let formatted = '';
             if (number >= 1000) {
-                for (var i = 0; i < Game.Utilities.ShortNumbers.length - 1; i++) {
+                for (let i = 0; i < game.utilities.ShortNumbers.length - 1; i++) {
                     let divider = Math.pow(10, (i + 1) * 3)
                     if (number >= divider) {
-                        formatted = (Math.trunc((number / divider) * 1000) / 1000).toFixed(3) + ' ' + Game.Utilities.ShortNumbers[i];
+                        formatted = (Math.trunc((number / divider) * 1000) / 1000).toFixed(3) + ' ' + game.utilities.ShortNumbers[i];
                     }
                 }
                 return formatted;
             }
             return (Math.trunc(number * 10) / 10).toFixed(1);
         },
-        GetBuildingByName: function(name) {
+        getBuildingByName: function(name) {
             let correctBuilding = null;
-            Game.Buildings.forEach(building => {
+            game.buildings.forEach(building => {
                 if (building.name == name) {
                     correctBuilding = building;
                     return;
@@ -387,80 +394,157 @@ var Game = {
             });
             return correctBuilding;
         },
-        GetBuildingIndexByName: function(name) {
-            for (let i = 0; i < Game.Buildings.length - 1; i++) {
-                let curBuilding = Game.Buildings[i];
+        getBuildingIndexByName: function(name) {
+            for (let i = 0; i < game.buildings.length - 1; i++) {
+                let curBuilding = game.buildings[i];
                 if (curBuilding.name == name) {
                     return i;
                 }
             }
         },
-        GetBuildingCount: function() {
+        getBuildingCount: function() {
             let amount = 0;
-            Game.Buildings.forEach(building => {
+            game.buildings.forEach(building => {
                 amount += building.amount;
             });
             return amount;
+        },
+        stringToBool: function(string) {
+            switch (string) {
+                case 'true':
+                    return true;
+                case 'false':
+                    return false;
+            }
         }
     },
-    Player: new Player(),
-    Logic: function() {
-        Game.UpdateDisplays();
+    saving: {
+        export: function () {
+            let saveString = '';
+            saveString += `${game.player.cookies}|${game.player.cookieStats.Earned}|${game.player.cookieStats.Spent}|${game.player.cookieStats.Clicked}-`;
+            let first = true;
+            game.buildings.forEach(building => {
+                if (first) {
+                    first = false;
+                    saveString += `${building.amount}|${building.locked}|`;
+                } else {
+                    saveString += `#${building.amount}|${building.locked}|`;
+                }
+                building.upgrades.forEach(upgrade => {
+                    saveString += `${upgrade.owned}:`;
+                });
+                saveString = saveString.slice(0, -1);
+            });
+            saveString = 'COOKIECLICKER|' + premagic(saveString);
+            saveString = premagic(saveString);
+            game.saving.saveToCache(saveString);
+        },
+        import: function(saveString) {
+            saveString = magic(saveString);
+            saveString = saveString.split('-');
+            game.saving.loadPlayer(saveString[0]);
+            game.saving.loadBuildings(saveString[1]);
+            game.settings.recalculateCPS = true;
+            game.updateShop(game.currentShop);
+        },
+        saveToCache: function(saveString) {
+            let local = 0;
+            try { local = window.localStorage.setItem(game.settings.key, saveString); } catch { console.log('Problem saving to cache'); }
+            return local;
+        },
+        getSaveFromCache: function() {
+            let local = 0;
+            try { local = window.localStorage.getItem(game.settings.key); } catch { console.log('Problem loading data from cache, probably doesn\'t exist'); }
+            return local;
+        },
+        loadPlayer(playerData) {
+            playerData = playerData.split('|');
+            try {
+                game.player.cookies = parseFloat(playerData[0]);
+                game.player.cookieStats.Earned = parseFloat(playerData[1]);
+                game.player.cookieStats.Spent = parseFloat(playerData[2]);
+                game.player.cookieStats.Clicked = parseFloat(playerData[3]);
+            } catch { console.log('Something went wrong whilst loading player data, likely from an older version and not to worry.') }
+        },
+        loadBuildings(buildingData) {
+            buildingData = buildingData.split('#');
+            try {
+                for (let i = 0; i < game.buildings.length; i++) {
+                    let savedBuilding = buildingData[i];
+                    let nonUpgrade = savedBuilding.split('|');
+                    let building = game.buildings[i];
+                    building.amount = parseFloat(nonUpgrade[0]);
+                    building.setCost();
+                    building.locked = game.utilities.stringToBool(nonUpgrade[1]);
+                    let j = 0;
+                    let upgrades = nonUpgrade[2].split(':');
+                    building.upgrades.forEach(upgrade => {
+                        upgrade.owned = game.utilities.stringToBool(upgrades[j]);
+                        j++;
+                    });
+                }
+            } catch { console.log('Something went wrong whilst loading building data, likely from an older version and not to worry.') }
+        }
+    },
+    player: new Player(),
+    logic: function() {
+        game.updateDisplays();
 
         // Only recalculate it when needed, saves on some processing power because this can turn out to be quite a lot of maths.
-        if (Game.Settings.RecalculateCPS == true) {
+        if (game.settings.recalculateCPS == true) {
             let CPS = 0;
-            Game.Buildings.forEach(building => {
+            game.buildings.forEach(building => {
                 CPS += building.getCPS();
             });
-            Game.Settings.RecalculateCPS = false;
-            Game.Player.AMPS = CPS / Game.Settings.Framerate;
-            Game.UpdateShop(Game.CurrentShop);
+            game.settings.recalculateCPS = false;
+            game.player.aMPF = CPS / game.settings.frameRate;
+            game.updateShop(game.currentShop);
         }
 
-        Game.Player.earnCookie(Game.Player.AMPS);
-        setTimeout(Game.Logic, 1000 / Game.Settings.Framerate);
+        game.player.earnCookie(game.player.aMPF);
+        game.saving.export();
+        setTimeout(game.logic, 1000 / game.settings.frameRate);
     },
-    UpdateDisplays: function() {
+    updateDisplays: function() {
         // Create temporary shorthand aliases for ease of use.
-        let Utils = Game.Utilities;
-        let Player = Game.Player;
-        let Stats = Player.cookieStats;
-
-        Utils.UpdateText('[id=cookieDisplay]', Utils.FormatNumber(Player.cookies));
-        Utils.UpdateText('[id=cpcDisplay]', Utils.FormatNumber(Player.AMPC));
-        Utils.UpdateText('[id=cpsDisplay]', Utils.FormatNumber(Player.AMPS * Game.Settings.Framerate));
-        Utils.UpdateText('#earnedDisplay', Utils.FormatNumber(Stats.Earned));
-        Utils.UpdateText('#spentDisplay', Utils.FormatNumber(Stats.Spent));
-        Utils.UpdateText('#clickedDisplay', Utils.FormatNumber(Stats.Clicked));
+        let updateText = game.utilities.updateText;
+        let format = game.utilities.formatNumber;
+        let player = game.player;
+        let stats = player.cookieStats;
+        updateText('[id=cookieDisplay]', format(player.cookies));
+        updateText('[id=cpcDisplay]', format(player.aMPC));
+        updateText('[id=cpsDisplay]', format(player.aMPF * game.settings.frameRate));
+        updateText('#earnedDisplay', format(stats.Earned));
+        updateText('#spentDisplay', format(stats.Spent));
+        updateText('#clickedDisplay', format(stats.Clicked));
     },
-    ConstructShop: function() {
-        let Buildings = Game.Buildings;
-        let FinalHTML = '';
-        Buildings.forEach(building => {
+    constructShop: function() {
+        let buildings = game.buildings;
+        let finalHtml = '';
+        buildings.forEach(building => {
             if (building.locked == false) {
-                FinalHTML += building.generateMenuButton();
+                finalHtml += building.generateMenuButton();
             }
         });
-        Game.Utilities.UpdateText('#shopList', FinalHTML);
+        game.utilities.updateText('#shopList', finalHtml);
     },
-    CurrentShop: 'Cursor',
-    UpdateShop: function(name) {
-        Game.CurrentShop = name;
-        let FinalHTML = '';
-        let building = Game.Utilities.GetBuildingByName(name);
-        FinalHTML += building.generateShopHTML();
-        Game.Utilities.UpdateText('#shop', FinalHTML);
+    currentShop: 'Cursor',
+    updateShop: function(name) {
+        game.currentShop = name;
+        let finalHtml = '';
+        let building = game.utilities.getBuildingByName(name);
+        finalHtml += building.generateShopHTML();
+        game.utilities.updateText('#shop', finalHtml);
     },
-    BuyBuilding: function(name, amount) {
-        let building = Game.Utilities.GetBuildingByName(name);
+    buyBuilding: function(name, amount) {
+        let building = game.utilities.getBuildingByName(name);
         building.buy(amount);
     },
-    BuyUpgrade: function(buildingName, upgrade) {
-        let building = Game.Utilities.GetBuildingByName(buildingName);
+    buyUpgrade: function(buildingName, upgrade) {
+        let building = game.utilities.getBuildingByName(buildingName);
         building.buyUpgrade(upgrade);
     },
-    Start: function() {
+    start: function() {
         // This prevents the user from holding down enter to click the cookie very quickly.
         $(document).ready(function() {
             $(window).keydown(function(event){
@@ -472,11 +556,17 @@ var Game = {
         });
         // This enables the cookie clicking process.
         $('.cookieButton').on('click', function() {
-            Game.Player.clickCookie();
+            game.player.clickCookie();
         });
-        Game.ConstructShop();
-        Game.Logic();
+        let localSave = game.saving.getSaveFromCache();
+        if (localSave) {
+            game.saving.import(localSave);
+        } else {
+            console.log('No cache save found');
+        }
+        game.constructShop();
+        game.logic();
     }
 }
 
-Game.Start();
+game.start();
