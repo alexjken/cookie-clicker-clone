@@ -374,7 +374,7 @@ let game = {
         formatNumber: function(number) {
             let formatted = '';
             if (number >= 1000) {
-                for (let i = 0; i < game.utilities.ShortNumbers.length - 1; i++) {
+                for (let i = 0; i < game.utilities.ShortNumbers.length; i++) {
                     let divider = Math.pow(10, (i + 1) * 3)
                     if (number >= divider) {
                         formatted = (Math.trunc((number / divider) * 1000) / 1000).toFixed(3) + ' ' + game.utilities.ShortNumbers[i];
