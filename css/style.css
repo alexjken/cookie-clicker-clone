@@ -59,23 +59,23 @@ h1 {
     max-width:220px;
     margin:auto;
     min-height:35px;
-    color:white;
-    background-color:#4287f5;
+    color:rgb(255, 255, 255);
+    background-color:rgb(66, 135, 245);
     font-weight:bolder;
-    border: 2px solid #2659ab;
+    border: 2px solid rgb(38, 89, 171);
     border-radius:5px;
     outline:none;
-    box-shadow: 0px 3px #163b78;
+    box-shadow: 0px 3px rgb(22, 59, 120);
 }
 
 .shopList button:hover {
     transform: translateY(1px);
-    box-shadow: 0px 2px #163b78;
+    box-shadow: 0px 2px rgb(22, 59, 120);
 }
 
 .shopList button:active {
     transform: translateY(2px);
-    box-shadow: 0px 1px #163b78;
+    box-shadow: 0px 1px rgb(22, 59, 120);
 }
 
 .shopList button:not(:last-child) {
@@ -96,22 +96,22 @@ h1 {
 .btnBuyGroup button {
     width:120px;
     margin-right:5px;
-    background-color:#21ab0c;
-    border:2px solid #1b8a0a;
+    background-color:rgb(33, 171, 12);
+    border:2px solid rgb(27, 138, 10);
     border-radius:5px;
     outline:none;
     color:white;
-    box-shadow: 0px 3px #125707;
+    box-shadow: 0px 3px rgb(18, 87, 7);
     margin-bottom:7px;
 }
 
 .btnBuyGroup button:hover {
-    box-shadow: 0px 2px #125707;
+    box-shadow: 0px 2px rgb(18, 87, 7);
     transform: translateY(1px);
 }
 
 .btnBuyGroup button:active {
-    box-shadow: 0px 1px #125707;
+    box-shadow: 0px 1px rgb(18, 87, 7);
     transform: translateY(2px);
 }
 
@@ -121,11 +121,11 @@ h1 {
 
 button.upgBtn{
     color:white;
-    background-color:#d68d04;
-    border: 2px solid #ab6f00;
+    background-color:rgb(214, 141, 4);
+    border: 2px solid rgb(171, 111, 0);
     border-radius:5px;
     outline:none;
-    box-shadow: 0px 3px #825400;
+    box-shadow: 0px 3px rgb(130, 84, 0);
     padding:10px 5px 10px 5px;
     width: 150px;
     margin-right:4px;
@@ -133,22 +133,137 @@ button.upgBtn{
 }
 
 button.upgBtn:hover {
-    box-shadow: 0px 2px #825400;
+    box-shadow: 0px 2px rgb(130, 84, 0);
     transform: translateY(1px);
 }
 
 button.upgBtn:active {
-    box-shadow: 0px 1px #825400;
+    box-shadow: 0px 1px rgb(130, 84, 0);
     transform: translateY(2px);
 }
 
 .upgNext {
     color:white;
     width:150px;
-    background-color: #919191;
-    border: 2px solid #707070;
+    background-color: rgb(145, 145, 145);
+    border: 2px solid rgb(112, 112, 112);
     border-radius:5px;
     text-align:center;
     padding: 10px;
-    box-shadow: 0px 3px #595959;
+    box-shadow: 0px 3px rgb(89, 89, 89);
+}
+
+.saving {
+    position:absolute;
+    width:200px;
+    left:5px;
+}
+
+.saving button {
+    width:50%;
+    float:left;
+    border: 2px solid rgb(0, 0, 0);
+    border-top:none;
+    border-radius:0px 0px 5px 5px;
+    margin-top:-2px;
+    height:27px;
+    line-height:25px;
+    outline:none;
+}
+
+.saving button:not(:last-child) {
+    border-radius:0px 0px 0px 5px;
+}
+
+.saving button:last-child {
+    border-radius: 0px 0px 5px 0px;
+}
+
+.saving button.import {
+    color:rgb(255, 255, 255);
+    background-color:rgb(33, 171, 12);
+    border-color:rgb(27, 138, 10);
+    box-shadow: 0px 3px rgb(18, 87, 7);
+    border-right:none;
+}
+
+.saving button.import:hover {
+    box-shadow: 0px 2px rgb(18, 87, 7);
+    transform: translateY(1px);
+}
+
+.saving button.import:active {
+    box-shadow: 0px 1px rgb(18, 87, 7);
+    transform: translateY(2px);
+}
+
+.saving button.export {
+    color:rgb(255, 255, 255);
+    background-color:rgb(212, 35, 35);
+    border-color: rgb(143, 24, 24);
+    box-shadow:0px 3px rgb(109, 18, 18);
+    border-left:none;
+}
+
+.saving button.export:hover {
+    box-shadow:0px 2px rgb(109, 18, 18);
+    transform: translateY(1px);
+}
+
+.saving button.export:active {
+    box-shadow:0px 1px rgb(109, 18, 18);
+    transform: translateY(2px);
+}
+
+.importExportBox {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    visibility: hidden;
+}
+
+.importExportBox div {
+    width: 300px;
+    height: 350px;
+    position: absolute;
+    top:50%;
+    left:50%;
+    margin-top:-175px;
+    margin-left:-150px;
+    background-color:rgb(0, 0, 0);
+    border-radius:5px;
+}
+
+.importExportBox div textarea {
+    display: block;
+    width:280px;
+    height:290px;
+    margin-left:7.5px;
+    margin-top:7.5px;
+    border-radius:3px;
+    outline:none;
+}
+
+.importExportBox div button {
+    width:150px;
+    height:30px;
+    margin-left:75px;
+    margin-top:7.5px;
+    border-radius:5px;
+    outline:none;
+    color:rgb(255, 255, 255);
+    background-color:rgb(212, 35, 35);
+    border-color: rgb(143, 24, 24);
+    box-shadow:0px 3px rgb(109, 18, 18);
+}
+
+.importExportBox div button:hover {
+    box-shadow:0px 2px rgb(109, 18, 18);
+    transform: translateY(1px);
+}
+
+.importExportBox div button:active {
+    box-shadow:0px 1px rgb(109, 18, 18);
+    transform: translateY(2px);
 }

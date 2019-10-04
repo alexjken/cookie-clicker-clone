@@ -143,7 +143,7 @@ var Base64 = {
 
 // FROM THIS POINT ONWARDS THIS IS NOT ORIGINAL B64 SOURCE
 
-function premagic( str ) {
+function witchery( str ) {
 	try{return Base64.encode(unescape(encodeURIComponent( str )));}
 	catch(err)
 	{return '';}
@@ -157,6 +157,13 @@ function wizardy( str ) {
 
 function magic(string) {
 	string = wizardy(string);
-	string = wizardy(string.split('|')[1]);
-	return string;
+	if (string.includes('COOKIECLICKER')) {
+		return wizardy(string.split('|')[1]);
+	} 
+	return false;
+}
+
+function premagic(string) {
+	string = witchery(string);
+	return witchery('COOKIECLICKER|'+string);
 }

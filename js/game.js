@@ -2,6 +2,7 @@ class Building {
     constructor(name, cost, effect, upgrades, locked = true) {
         this.name = name;
         this.amount = 0;
+        this.originalCost = cost;
         this.cost = cost;
         this.multiplier = 1;
         this.baseEffect = effect;
@@ -29,6 +30,7 @@ class Building {
     }
 
     setCost() {
+        this.cost = this.originalCost;
         for (let i = 0; i < this.amount; i++) {
             this.cost = Math.round(this.cost * 1.15);
         }
@@ -368,13 +370,13 @@ let game = {
     ],
     utilities: {
         ShortNumbers: ['K', 'M', 'B', 'T', 'Qua', 'Qui', 'Sex', 'Sep', 'Oct', 'Non', 'Dec', 'Und', 'Duo', 'Tre', 'QuaD', 'QuiD', 'SexD', 'SepD', 'OctD', 'NonD', 'Vig'],
-        updateText: function(className, text) {
+        updateText (className, text) {
             let elements = document.getElementsByClassName(className);
             for(var i in elements) {
                 elements[i].innerHTML = text;
             }
         },
-        formatNumber: function(number) {
+        formatNumber (number) {
             let formatted = '';
             if (number >= 1000) {
                 for (let i = 0; i < game.utilities.ShortNumbers.length; i++) {
@@ -387,7 +389,7 @@ let game = {
             }
             return (Math.trunc(number * 10) / 10).toFixed(1);
         },
-        getBuildingByName: function(name) {
+        getBuildingByName (name) {
             let correctBuilding = null;
             game.buildings.forEach(building => {
                 if (building.name == name) {
@@ -397,7 +399,7 @@ let game = {
             });
             return correctBuilding;
         },
-        getBuildingIndexByName: function(name) {
+        getBuildingIndexByName (name) {
             for (let i = 0; i < game.buildings.length - 1; i++) {
                 let curBuilding = game.buildings[i];
                 if (curBuilding.name == name) {
@@ -405,14 +407,14 @@ let game = {
                 }
             }
         },
-        getBuildingCount: function() {
+        getBuildingCount () {
             let amount = 0;
             game.buildings.forEach(building => {
                 amount += building.amount;
             });
             return amount;
         },
-        stringToBool: function(string) {
+        stringToBool (string) {
             switch (string) {
                 case 'true':
                     return true;
@@ -422,7 +424,7 @@ let game = {
         }
     },
     saving: {
-        export: function () {
+        export () {
             let saveString = '';
             saveString += `${game.player.cookies}|${game.player.cookieStats.Earned}|${game.player.cookieStats.Spent}|${game.player.cookieStats.Clicked}-`;
             let first = true;
@@ -438,29 +440,25 @@ let game = {
                 });
                 saveString = saveString.slice(0, -1);
             });
-            saveString = 'COOKIECLICKER|' + premagic(saveString);
-            saveString = premagic(saveString);
-            game.saving.saveToCache(saveString);
+            game.saving.saveToCache(premagic(saveString));
+            return premagic(saveString);
         },
-        import: function(saveString) {
-            saveString = magic(saveString);
-            saveString = saveString.split('-');
-            game.saving.loadPlayer(saveString[0]);
-            game.saving.loadBuildings(saveString[1]);
-            game.settings.recalculateCPS = true;
-            game.updateShop(game.currentShop);
+        import (saveString) {
+            if (saveString) {
+                saveString = magic(saveString).split('-');
+                game.saving.loadPlayer(saveString[0]);
+                game.saving.loadBuildings(saveString[1]);
+                game.settings.recalculateCPS = true;
+                game.updateShop(game.currentShop);
+            }
         },
-        saveToCache: function(saveString) {
-            let local = 0;
-            try { local = window.localStorage.setItem(game.settings.key, saveString); } catch { console.log('Problem saving to cache'); }
-            return local;
+        saveToCache (saveString) {
+            try {  return window.localStorage.setItem(game.settings.key, saveString); } catch { console.log('Problem saving to cache'); }
         },
-        getSaveFromCache: function() {
-            let local = 0;
-            try { local = window.localStorage.getItem(game.settings.key); } catch { console.log('Problem loading data from cache, probably doesn\'t exist'); }
-            return local;
+        getSaveFromCache () {
+            try {  return window.localStorage.getItem(game.settings.key); } catch { console.log('Problem loading data from cache, probably doesn\'t exist'); }
         },
-        loadPlayer(playerData) {
+        loadPlayer (playerData) {
             playerData = playerData.split('|');
             try {
                 game.player.cookies = parseFloat(playerData[0]);
@@ -469,7 +467,7 @@ let game = {
                 game.player.cookieStats.Clicked = parseFloat(playerData[3]);
             } catch { console.log('Something went wrong whilst loading player data, likely from an older version and not to worry.') }
         },
-        loadBuildings(buildingData) {
+        loadBuildings (buildingData) {
             buildingData = buildingData.split('#');
             try {
                 for (let i = 0; i < game.buildings.length; i++) {
@@ -487,12 +485,38 @@ let game = {
                     });
                 }
             } catch { console.log('Something went wrong whilst loading building data, likely from an older version and not to worry.') }
+        },
+        importing: false,
+        openBox(type) {
+            let container = document.getElementsByClassName('importExportBox')[0];
+            let box = document.getElementById('saveBox');
+            switch(type) {
+                case 'import':
+                    this.importing = true;
+                    container.style.visibility = 'visible';
+                    box.removeAttribute('readonly');
+                    box.value = '';
+                    return;
+                case 'export':
+                    let saveString = this.export();
+                    container.style.visibility = 'visible';
+                    box.value = saveString;
+                    box.setAttribute('readonly', true);
+                    return;
+            }
+        },
+        closeBox () {
+            document.getElementsByClassName('importExportBox')[0].style.visibility = 'hidden';
+            if (this.importing) {
+                let box = document.getElementById('saveBox');
+                this.import(box.value);
+                box.value = '';
+            }
         }
     },
     player: new Player(),
-    logic: function() {
+    logic () {
         game.updateDisplays();
-
         // Only recalculate it when needed, saves on some processing power because this can turn out to be quite a lot of maths.
         if (game.settings.recalculateCPS == true) {
             let CPS = 0;
@@ -503,17 +527,23 @@ let game = {
             game.player.aMPF = CPS / game.settings.frameRate;
             game.updateShop(game.currentShop);
         }
-
-        game.player.earnCookie(game.player.aMPF);
-        game.saving.export();
-        setTimeout(game.logic, 1000 / game.settings.frameRate);
+        if (document.hasFocus()) {
+            game.player.earnCookie(game.player.aMPF);
+            game.saving.export();
+            setTimeout(game.logic, 1000 / game.settings.frameRate);
+        } else {
+            game.player.earnCookie(game.player.aMPF * game.settings.frameRate);
+            game.saving.export();
+            setTimeout(game.logic, 1000);
+        }
     },
-    updateDisplays: function() {
+    updateDisplays () {
         // Create temporary shorthand aliases for ease of use.
         let updateText = game.utilities.updateText;
         let format = game.utilities.formatNumber;
         let player = game.player;
         let stats = player.cookieStats;
+        document.title = 'Cookie Clicker | ' + format(player.cookies);
         updateText('cookieDisplay', format(player.cookies));
         updateText('cpcDisplay', format(player.aMPC));
         updateText('cpsDisplay', format(player.aMPF * game.settings.frameRate));
@@ -521,7 +551,7 @@ let game = {
         updateText('spentDisplay', format(stats.Spent));
         updateText('clickedDisplay', format(stats.Clicked));
     },
-    constructShop: function() {
+    constructShop () {
         let buildings = game.buildings;
         let finalHtml = '';
         buildings.forEach(building => {
@@ -532,22 +562,22 @@ let game = {
         game.utilities.updateText('shopList', finalHtml);
     },
     currentShop: 'Cursor',
-    updateShop: function(name) {
+    updateShop (name) {
         game.currentShop = name;
         let finalHtml = '';
         let building = game.utilities.getBuildingByName(name);
         finalHtml += building.generateShopHTML();
         game.utilities.updateText('shop', finalHtml);
     },
-    buyBuilding: function(name, amount) {
+    buyBuilding (name, amount) {
         let building = game.utilities.getBuildingByName(name);
         building.buy(amount);
     },
-    buyUpgrade: function(buildingName, upgrade) {
+    buyUpgrade (buildingName, upgrade) {
         let building = game.utilities.getBuildingByName(buildingName);
         building.buyUpgrade(upgrade);
     },
-    start: function() {
+    start () {
         // This prevents the user from holding down enter to click the cookie very quickly.
         window.addEventListener('keydown', () => {
             if (event.keyCode == 13 || event.keyCode == 32) {
@@ -567,6 +597,7 @@ let game = {
         } else {
             console.log('No cache save found');
         }
+
         game.constructShop();
         game.logic();
     }

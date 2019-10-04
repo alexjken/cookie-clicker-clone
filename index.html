@@ -3,9 +3,19 @@
 <head>
     <meta charset="utf-8">
     <link rel="stylesheet" href="css/style.css"/>
-    <title>Cookie Clicker Clone</title>
+    <title>Cookie Clicker | 0</title>
 </head>
 <body>
+	<div class="saving">
+		<button class="import" onclick="game.saving.openBox('import')">Import</button>
+		<button class="export" onclick="game.saving.openBox('export')">Export</button>
+	</div>
+	<div class="importExportBox">
+		<div>
+			<textarea id="saveBox" maxlength="5000"></textarea>
+			<button onclick="game.saving.closeBox()">Close</button>
+		</div>
+	</div>
 	<div class="cookieContainer">
 		<b class="cookieDisplay">0</b></br>
 		cps : <b class="cpsDisplay">0</b> | cpc : <b class="cpcDisplay">0</b>
