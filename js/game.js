@@ -368,8 +368,11 @@ let game = {
     ],
     utilities: {
         ShortNumbers: ['K', 'M', 'B', 'T', 'Qua', 'Qui', 'Sex', 'Sep', 'Oct', 'Non', 'Dec', 'Und', 'Duo', 'Tre', 'QuaD', 'QuiD', 'SexD', 'SepD', 'OctD', 'NonD', 'Vig'],
-        updateText: function(id, text) {
-            $(id).html(text)
+        updateText: function(className, text) {
+            let elements = document.getElementsByClassName(className);
+            for(var i in elements) {
+                elements[i].innerHTML = text;
+            }
         },
         formatNumber: function(number) {
             let formatted = '';
@@ -511,12 +514,12 @@ let game = {
         let format = game.utilities.formatNumber;
         let player = game.player;
         let stats = player.cookieStats;
-        updateText('[id=cookieDisplay]', format(player.cookies));
-        updateText('[id=cpcDisplay]', format(player.aMPC));
-        updateText('[id=cpsDisplay]', format(player.aMPF * game.settings.frameRate));
-        updateText('#earnedDisplay', format(stats.Earned));
-        updateText('#spentDisplay', format(stats.Spent));
-        updateText('#clickedDisplay', format(stats.Clicked));
+        updateText('cookieDisplay', format(player.cookies));
+        updateText('cpcDisplay', format(player.aMPC));
+        updateText('cpsDisplay', format(player.aMPF * game.settings.frameRate));
+        updateText('earnedDisplay', format(stats.Earned));
+        updateText('spentDisplay', format(stats.Spent));
+        updateText('clickedDisplay', format(stats.Clicked));
     },
     constructShop: function() {
         let buildings = game.buildings;
@@ -526,7 +529,7 @@ let game = {
                 finalHtml += building.generateMenuButton();
             }
         });
-        game.utilities.updateText('#shopList', finalHtml);
+        game.utilities.updateText('shopList', finalHtml);
     },
     currentShop: 'Cursor',
     updateShop: function(name) {
@@ -534,7 +537,7 @@ let game = {
         let finalHtml = '';
         let building = game.utilities.getBuildingByName(name);
         finalHtml += building.generateShopHTML();
-        game.utilities.updateText('#shop', finalHtml);
+        game.utilities.updateText('shop', finalHtml);
     },
     buyBuilding: function(name, amount) {
         let building = game.utilities.getBuildingByName(name);
@@ -546,18 +549,18 @@ let game = {
     },
     start: function() {
         // This prevents the user from holding down enter to click the cookie very quickly.
-        $(document).ready(function() {
-            $(window).keydown(function(event){
-                if (event.keyCode == 13 || event.keyCode == 32) {
-                    event.preventDefault();
-                    return false;
-                }
-            });
+        window.addEventListener('keydown', () => {
+            if (event.keyCode == 13 || event.keyCode == 32) {
+                event.preventDefault();
+                return false;
+            }
         });
+
         // This enables the cookie clicking process.
-        $('.cookieButton').on('click', function() {
-            game.player.clickCookie();
-        });
+        document.getElementsByClassName('cookieButton')[0].onclick = () => {
+            game.player.clickCookie() 
+        };
+
         let localSave = game.saving.getSaveFromCache();
         if (localSave) {
             game.saving.import(localSave);

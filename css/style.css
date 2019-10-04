@@ -47,13 +47,13 @@ h1 {
     transform: translateY(5px);
 }
 
-#shopList {
+.shopList {
     width:259px;
     float:left;
     clear:both;
 }
 
-#shopList button {
+.shopList button {
     display:block;
     width:85%;
     max-width:220px;
@@ -68,21 +68,21 @@ h1 {
     box-shadow: 0px 3px #163b78;
 }
 
-#shopList button:hover {
+.shopList button:hover {
     transform: translateY(1px);
     box-shadow: 0px 2px #163b78;
 }
 
-#shopList button:active {
+.shopList button:active {
     transform: translateY(2px);
     box-shadow: 0px 1px #163b78;
 }
 
-#shopList button:not(:last-child) {
+.shopList button:not(:last-child) {
     margin-bottom:10px;
 }
 
-#shop {
+.shop {
     float:left;
     display:block;
     width:450px;
