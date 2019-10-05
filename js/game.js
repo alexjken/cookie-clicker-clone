@@ -192,7 +192,7 @@ let game = {
     },
     buildings: [
         // Generate all buildings here
-        new Building('Cursor', 100, 0.1, [
+        new Building('Cursor', 15, 0.1, [
             new Upgrade('Reinforced Index Finger', 100, 'Cursors and clicking are twice as efficient', 1),
             new Upgrade('Carpal tunnel prevention cream', 500, 'Cursors and clicking are twice as efficient', 1),
             new Upgrade('Ambidextrous', 10000, 'Cursors and clicking are twice as efficient', 10),
@@ -206,7 +206,7 @@ let game = {
             new Upgrade('Septillion Fingers', 10000000000000000000, 'Mouse and cursors gain +500.000K for every non-cursor building owned', 350, 500000),
             new Upgrade('Octillion Fingers', 10000000000000000000000, 'Mouse and cursors gain +5.000M for each non-cursor building owned', 400, 5000000)
         ], false),
-        new Building('Grandma', 300, 3, [
+        new Building('Grandma', 100, 1, [
             new Upgrade('Forwards from grandma', 1000, 'Grandmas are twice as efficient', 1),
             new Upgrade('Steel-plated rolling pins', 5000, 'Grandmas are twice as efficient', 5),
             new Upgrade('Lubricated dentures', 50000, 'Grandmas are twice as efficient', 25),
@@ -444,12 +444,15 @@ let game = {
             return premagic(saveString);
         },
         import (saveString) {
-            if (saveString) {
-                saveString = magic(saveString).split('-');
+            saveString = magic(saveString);
+            if (saveString != false) {
+                saveString = saveString.split('-');
                 game.saving.loadPlayer(saveString[0]);
                 game.saving.loadBuildings(saveString[1]);
                 game.settings.recalculateCPS = true;
                 game.updateShop(game.currentShop);
+            } else {
+                alert('Something wasn\'t quite right there, unfortunately your save could not be loaded.');
             }
         },
         saveToCache (saveString) {
@@ -485,6 +488,29 @@ let game = {
                     });
                 }
             } catch { console.log('Something went wrong whilst loading building data, likely from an older version and not to worry.') }
+        },
+        wipeSave() {
+            if (confirm('Are you sure you want to wipe your save? This cannot be reversed!')) {
+                game.player.cookies = 0;
+                game.player.cookieStats.Earned = 0;
+                game.player.cookieStats.Spent = 0;
+                game.player.cookieStats.Clicked = 0;
+                game.buildings.forEach(building => {
+                    if (building.name != 'Cursor') {
+                        building.locked = true;
+                    }
+                    building.amount = 0;
+                    building.effect = 0;
+                    building.specialCPS = 0;
+                    building.setCost();
+                    for(var i in building.upgrades) {
+                        building.upgrades[i].owned = false;
+                    }
+                });
+                game.constructShop();
+                game.updateShop('Cursor');
+                game.settings.recalculateCPS = true;
+            }
         },
         importing: false,
         openBox(type) {

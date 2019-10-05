@@ -156,9 +156,9 @@ function wizardy( str ) {
 }
 
 function magic(string) {
-	string = wizardy(string);
-	if (string.includes('COOKIECLICKER')) {
-		return wizardy(string.split('|')[1]);
+	string = wizardy(string).split('|');
+	if (string[0] == 'COOKIECLICKER') {
+		return wizardy(string[1]);
 	} 
 	return false;
 }

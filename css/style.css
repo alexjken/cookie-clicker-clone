@@ -155,12 +155,12 @@ button.upgBtn:active {
 
 .saving {
     position:absolute;
-    width:200px;
+    width:100%;
     left:5px;
 }
 
 .saving button {
-    width:50%;
+    width:100px;
     float:left;
     border: 2px solid rgb(0, 0, 0);
     border-top:none;
@@ -171,11 +171,11 @@ button.upgBtn:active {
     outline:none;
 }
 
-.saving button:not(:last-child) {
+.saving button.import {
     border-radius:0px 0px 0px 5px;
 }
 
-.saving button:last-child {
+.saving button.export {
     border-radius: 0px 0px 5px 0px;
 }
 
@@ -199,20 +199,27 @@ button.upgBtn:active {
 
 .saving button.export {
     color:rgb(255, 255, 255);
-    background-color:rgb(212, 35, 35);
-    border-color: rgb(143, 24, 24);
-    box-shadow:0px 3px rgb(109, 18, 18);
+    background-color:rgb(158, 29, 29);
+    border-color: rgb(136, 25, 25);
+    box-shadow:0px 3px rgb(92, 16, 16);
     border-left:none;
 }
 
 .saving button.export:hover {
-    box-shadow:0px 2px rgb(109, 18, 18);
+    box-shadow:0px 2px rgb(92, 16, 16);
     transform: translateY(1px);
 }
 
 .saving button.export:active {
-    box-shadow:0px 1px rgb(109, 18, 18);
+    box-shadow:0px 1px rgb(92, 16, 16);
     transform: translateY(2px);
+}
+
+.saving button.export.wipe {
+    position: absolute;
+    right:10px;
+    border-radius: 0px 0px 5px 5px;
+    border-left: 2px solid rgb(136, 25, 25);
 }
 
 .importExportBox {
@@ -237,12 +244,14 @@ button.upgBtn:active {
 
 .importExportBox div textarea {
     display: block;
-    width:280px;
+    width:282.5px;
     height:290px;
     margin-left:7.5px;
     margin-top:7.5px;
+    border:none;
     border-radius:3px;
     outline:none;
+    resize:none;
 }
 
 .importExportBox div button {
@@ -253,17 +262,17 @@ button.upgBtn:active {
     border-radius:5px;
     outline:none;
     color:rgb(255, 255, 255);
-    background-color:rgb(212, 35, 35);
-    border-color: rgb(143, 24, 24);
-    box-shadow:0px 3px rgb(109, 18, 18);
+    background-color:rgb(158, 29, 29);
+    border-color: rgb(136, 25, 25);
+    box-shadow:0px 2px rgb(92, 16, 16);
 }
 
 .importExportBox div button:hover {
-    box-shadow:0px 2px rgb(109, 18, 18);
+    box-shadow:0px 1px rgb(92, 16, 16);
     transform: translateY(1px);
 }
 
 .importExportBox div button:active {
-    box-shadow:0px 1px rgb(109, 18, 18);
+    box-shadow:0px 0px rgb(92, 16, 16);
     transform: translateY(2px);
 }
