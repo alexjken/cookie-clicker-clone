@@ -14,7 +14,7 @@ If you'd like to give this game a go, you can find it [here](https://alexjken.gi
 
 ## Author
 
-* **Alex James** - [AlexJKen](https://github.com/AlexJKen)
+* **Alex James** - [AlexJBz](https://github.com/AlexJBz)
 
 ## Acknowledgments
 
