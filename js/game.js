@@ -117,7 +117,7 @@ class Building {
                 } else {
                     if (notMet == false) {
                         notMet = true;
-                        html += `<div class="upgNext">Next upgrade in <b>${upgrade.limit - this.amount}</b> more ${this.name.toLowerCase()}(s)</div>`;
+                        html += `</br><button class="upgNext">Next upgrade in <b>${upgrade.limit - this.amount}</b> more ${this.name.toLowerCase()}(s)</button>`;
                     }
                 }
             }

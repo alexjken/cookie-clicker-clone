@@ -7,6 +7,11 @@ h1 {
     margin-bottom:0px;
 }
 
+.stats {
+    transform: translateY(5px);
+    padding-left:10px;
+}
+
 .stats ul {
     margin-top:0px;
 }
@@ -275,4 +280,33 @@ button.upgBtn:active {
 .importExportBox div button:active {
     box-shadow:0px 0px rgb(92, 16, 16);
     transform: translateY(2px);
+}
+
+@media only screen and (max-width: 800px) {
+    
+    .shopList button {
+        margin:auto;
+    }
+
+    .shopList button:last-child {
+        margin-bottom:10px;
+    }
+
+    .shopList {
+        width:100%;
+    }
+    
+    .shop {
+        text-align: center;
+        width:100%;
+    }
+
+    .cookieContainer {
+        padding-top:40px;
+    }    
+
+    .saving button.export.wipe {
+        right:10px;
+    }
+
 }
