@@ -241,7 +241,9 @@ let game = {
             new Upgrade('Coreforge', 6000000000000, 'Mines are twice as efficient', 150),
             new Upgrade('Planetsplitters', 6000000000000000, 'Mines are twice as efficient', 200),
             new Upgrade('Canola oil wells', 6000000000000000000, 'Mines are twice as efficient', 250),
-            new Upgrade('Mole People', 6000000000000000000000, 'Mines are twice as efficient', 300)
+            new Upgrade('Mole People', 6000000000000000000000, 'Mines are twice as efficient', 300),
+            new Upgrade('Mine canaries', 6000000000000000000000000, 'Mines are twice as efficient', 350),
+            new Upgrade('Bore again', 60000000000000000000000000000, 'Mines are twice as efficient', 400)
         ]),
         new Building('Factory', 130000, 260, [
             new Upgrade('Sturdier conveyor belts', 1300000, 'Factories are twice as efficient', 1),
@@ -252,7 +254,9 @@ let game = {
             new Upgrade('Deep-bake process', 65000000000000, 'Factories are twice as efficient', 150),
             new Upgrade('Cyborg workforce', 65000000000000000, 'Factories are twice as efficient', 200),
             new Upgrade('78-hour days', 65000000000000000000, 'Factories are twice as efficient', 250),
-            new Upgrade('Machine learning', 65000000000000000000000, 'Factories are twice as efficient', 300)
+            new Upgrade('Machine learning', 65000000000000000000000, 'Factories are twice as efficient', 300),
+            new Upgrade('Brownie point system', 65000000000000000000000000, 'Factories are twice as efficient', 350),
+            new Upgrade('"Volunteer" interns', 650000000000000000000000000000, 'Factories are twice as efficient', 400)
         ]),
         new Building('Bank', 1400000, 1400, [
             new Upgrade('Taller Tellers', 14000000, 'Banks are twice as efficient', 1),
@@ -263,7 +267,9 @@ let game = {
             new Upgrade('Financial zen', 700000000000000, 'Banks are twice as efficient', 150),
             new Upgrade('Way of the wallet', 700000000000000000, 'Banks are twice as efficient', 200),
             new Upgrade('The stuff rationale', 700000000000000000000, 'Banks are twice as efficient', 250),
-            new Upgrade('Edible money', 700000000000000000000, 'Banks are twice as efficient', 300)
+            new Upgrade('Edible money', 700000000000000000000, 'Banks are twice as efficient', 300),
+            new Upgrade('Grand supercycle', 700000000000000000000000, 'Banks are twice as efficient', 350),
+            new Upgrade('Rules of acquisition', 7000000000000000000000000000, 'Banks are twice as efficient', 400)
         ]),
         new Building('Temple', 20000000, 7800, [
             new Upgrade('Golden idols', 200000000, 'Temples are twice as efficient', 1),
@@ -274,7 +280,9 @@ let game = {
             new Upgrade('Great Baker in the sky', 10000000000000000, 'Temples are twice as efficient', 150),
             new Upgrade('Creation myth', 10000000000000000000, 'Temples are twice as efficient', 200),
             new Upgrade('Theocracy', 10000000000000000000000, 'Temples are twice as efficient', 250),
-            new Upgrade('Sick rap prayers', 10000000000000000000000000, 'Temples are twice as efficient', 300)
+            new Upgrade('Sick rap prayers', 10000000000000000000000000, 'Temples are twice as efficient', 300),
+            new Upgrade('Psalm-reading', 10000000000000000000000000000, 'Temples are twice as efficient', 350),
+            new Upgrade('War of the gods', 100000000000000000000000000000000, 'Temples are twice as efficient', 400)
         ]),
         new Building('Wizard Tower', 330000000, 44000, [
             new Upgrade('Pointier hats', 3300000000, 'Wizard towers are twice as efficient', 1),
@@ -285,7 +293,9 @@ let game = {
             new Upgrade('Dark formulas', 165000000000000000, 'Wizard towers are twice as efficient', 150),
             new Upgrade('Cookiemancy', 165000000000000000000, 'Wizard towers are twice as efficient', 200),
             new Upgrade('Rabbit trick', 165000000000000000000000, 'Wizard towers are twice as efficient', 250),
-            new Upgrade('Deluxe tailored wands', 165000000000000000000000000, 'Wizard towers are twice as efficient', 300)
+            new Upgrade('Deluxe tailored wands', 165000000000000000000000000, 'Wizard towers are twice as efficient', 300),
+            new Upgrade('Immobile spellcasting', 165000000000000000000000000000, 'Wizard towers are twice as efficient', 350),
+            new Upgrade('Electricity', 1650000000000000000000000000000000, 'Wizard towers are twices as efficient', 400)
         ]),
         new Building('Shipment', 5100000000, 260000, [
             new Upgrade('Vanilla nebulae', 51000000000, 'Shipments are twice as efficient', 1),
@@ -296,7 +306,9 @@ let game = {
             new Upgrade('Generation ship', 2550000000000000000, 'Shipments are twice as efficient', 150),
             new Upgrade('Dyson sphere', 2550000000000000000000, 'Shipments are twice as efficient', 200),
             new Upgrade('The final frontier', 2550000000000000000000000, 'Shipments are twice as efficient', 250),
-            new Upgrade('Autopilot', 2550000000000000000000000000, 'Shipments are twice as efficient', 300)
+            new Upgrade('Autopilot', 2550000000000000000000000000, 'Shipments are twice as efficient', 300),
+            new Upgrade('Restaurants at the end of the universe', 2550000000000000000000000000000, 'Shipments are twice as efficient', 350),
+            new Upgrade('Universal alphabet', 25500000000000000000000000000000000, 'Shipments are twice as efficient', 400)
         ]),
         new Building('Alchemy Lab', 75000000000, 1500000, [
             new Upgrade('Antimony', 750000000000, 'Alchemy labs are twice as efficient', 1),
@@ -307,7 +319,9 @@ let game = {
             new Upgrade('Origin crucible', 37500000000000000000, 'Alchemy labs are twice as efficient', 150),
             new Upgrade('Theory of atomic fluidity', 37500000000000000000000, 'Alchemy labs are twice as efficient', 200),
             new Upgrade('Beige goo', 37500000000000000000000000, 'Alchemy labs are twice as efficient', 250),
-            new Upgrade('The advent of chemistry', 37500000000000000000000000000, 'Alchemy labs are twice as efficient', 300)
+            new Upgrade('The advent of chemistry', 37500000000000000000000000000, 'Alchemy labs are twice as efficient', 300),
+            new Upgrade('On second thought', 37500000000000000000000000000000, 'Alchemy labs are twice as efficient', 350),
+            new Upgrade('Public betterment', 375000000000000000000000000000000000, 'Alchemy labs are twice as efficient', 400)
         ]),
         new Building('Portal', 1000000000000, 10000000, [
             new Upgrade('Ancient tablet', 10000000000000, 'Portals are twice as efficient', 1),
@@ -318,7 +332,9 @@ let game = {
             new Upgrade('Deity-sized portals', 500000000000000000000, 'Portals are twice as efficient', 150),
             new Upgrade('End of times back-up plan', 500000000000000000000000, 'Portals are twice as efficient', 200),
             new Upgrade('Maddening chants', 500000000000000000000000000, 'Portals are twice as efficient', 250),
-            new Upgrade('The real world', 500000000000000000000000000000, 'Portals are twice as efficient', 300)
+            new Upgrade('The real world', 500000000000000000000000000000, 'Portals are twice as efficient', 300),
+            new Upgrade('Dimensional garbage gulper', 500000000000000000000000000000000, 'Portals are twice as efficient', 350),
+            new Upgrade('Embedded microportals', 5000000000000000000000000000000000000, 'Portals are twice as efficient', 400)
         ]),
         new Building('Time Machine', 14000000000000, 65000000, [
             new Upgrade('Flux capacitors', 140000000000000, 'Time machines are twice as efficient', 1),
@@ -329,7 +345,9 @@ let game = {
             new Upgrade('Far future enactment', 7000000000000000000000, 'Time machines are twice as efficient', 150),
             new Upgrade('Great loop hypothesis', 7000000000000000000000000, 'Time machines are twice as efficient', 200),
             new Upgrade('Cookietopian moments of maybe', 7000000000000000000000000000, 'Time machines are twice as efficient', 250),
-            new Upgrade('Second seconds', 7000000000000000000000000000000, 'Time machines are twice as efficient', 300)
+            new Upgrade('Second seconds', 7000000000000000000000000000000, 'Time machines are twice as efficient', 300),
+            new Upgrade('Additional clock hands', 7000000000000000000000000000000000, 'Time machines are twice as efficient', 350),
+            new Upgrade('Nostalgia', 70000000000000000000000000000000000000, 'Time machines are twice as efficient', 400)
         ]),
         new Building('Antimatter Condenser', 170000000000000, 430000000, [
             new Upgrade('Sugar bosons', 1700000000000000, 'Antimatter condensers are twice as efficient', 1),
@@ -340,7 +358,9 @@ let game = {
             new Upgrade('Nanocosmics', 85000000000000000000000, 'Antimatter condensers are twice as efficient', 150),
             new Upgrade('The Pulse', 85000000000000000000000000, 'Antimatter condensers are twice as efficient', 200),
             new Upgrade('Some other super-tiny fundamental particle? Probably?', 85000000000000000000000000000, 'Antimatter condensers are twice as efficient', 250),
-            new Upgrade('Quantum comb', 85000000000000000000000000000000, 'Antimatter condensers are twice as efficient', 300)
+            new Upgrade('Quantum comb', 85000000000000000000000000000000, 'Antimatter condensers are twice as efficient', 300),
+            new Upgrade('Baking Nobel prize', 85000000000000000000000000000000000, 'Antimatter condensers are twice as efficient', 350),
+            new Upgrade('The definite molecule', 850000000000000000000000000000000000000, 'Antimatter condensers are twice as efficient', 400)
         ]),
         new Building('Prism', 2100000000000000, 2900000000, [
             new Upgrade('Gem polish', 21000000000000000, 'Prims are twice as efficient', 1),
@@ -351,7 +371,9 @@ let game = {
             new Upgrade('Glow-in-the-dark', 1050000000000000000000000, 'Prims are twice as efficient', 150),
             new Upgrade('Lux sanctorum', 1050000000000000000000000000, 'Prims are twice as efficient', 200),
             new Upgrade('Reverse shadows', 1050000000000000000000000000000, 'Prims are twice as efficient', 250),
-            new Upgrade('Crystal mirrors', 1050000000000000000000000000000000, 'Prims are twice as efficient', 300)
+            new Upgrade('Crystal mirrors', 1050000000000000000000000000000000, 'Prims are twice as efficient', 300),
+            new Upgrade('Reverse theory of light', 1050000000000000000000000000000000000, 'Prisms are twice as efficient', 350),
+            new Upgrade('Light capture measures', 10500000000000000000000000000000000000000, 'Prisms are twice as efficient', 400)
         ]),
         new Building('Chancemaker', 26000000000000000, 21000000000, [
             new Upgrade('Your lucky cookie', 260000000000000000, 'Chancemakers are twice as efficient', 1),
@@ -362,10 +384,35 @@ let game = {
             new Upgrade('Leprechaun village', 13000000000000000000000000, 'Chancemakers are twice as efficient', 150),
             new Upgrade('Improbability drive', 13000000000000000000000000000, 'Chancemakers are twice as efficient', 200),
             new Upgrade('Antisuperstistronics', 13000000000000000000000000000000, 'Chancemakers are twice as efficient', 250),
-            new Upgrade('Bunnypedes', 13000000000000000000000000000000000, 'Chancemakers are twice as efficient', 300)
+            new Upgrade('Bunnypedes', 13000000000000000000000000000000000, 'Chancemakers are twice as efficient', 300),
+            new Upgrade('Revised probalistics', 13000000000000000000000000000000000000, 'Chancemakers are twice as efficient', 350),
+            new Upgrade('0-sided dice', 130000000000000000000000000000000000000000, 'Chancemakers are twice as efficient', 400)
         ]),
         new Building('Fractal Engine', 310000000000000000, 150000000000, [
-            new Upgrade('Metabakeries', 3100000000000000000, 'Fractal engines are twice as efficient', 1)
+            new Upgrade('Metabakeries', 3100000000000000000, 'Fractal engines are twice as efficient', 1),
+            new Upgrade('Mandelbrown sugar', 15500000000000000000, 'Fractal engines are twice as efficient', 5),
+            new Upgrade('Fractoids', 155000000000000000000, 'Fractal engines are twice as efficient', 25),
+            new Upgrade('Nested universe theory', 15500000000000000000000, 'Fractal engines are twice as efficient', 50),
+            new Upgrade('Menger sponge cake', 1550000000000000000000000, 'Fractal engines are twice as efficient', 100),
+            new Upgrade('One particularly good-humoured cow', 155000000000000000000000000, 'Fractal engines are twice as efficient', 150),
+            new Upgrade('Chocolate ouroboros', 155000000000000000000000000000, 'Fractal engines are twice as efficient', 200),
+            new Upgrade('Nested', 155000000000000000000000000000000, 'Fractal engines are twice as efficient', 250),
+            new Upgrade('Space-filling fibers', 155000000000000000000000000000000000, 'Fractal engines are twice as efficient', 300),
+            new Upgrade('Endless book of prose', 155000000000000000000000000000000000000, 'Fractal engines are twice as efficient', 350),
+            new Upgrade('The set of all sets', 1550000000000000000000000000000000000000000, 'Fractal engines are twice as efficient', 400)
+        ]),
+        new Building('Java Console', 71000000000000000000, 1100000000000, [
+            new Upgrade('The JavaScript console for dummies', 710000000000000000000, 'Java consoles are twice as efficient', 1),
+            new Upgrade('64bit Arrays', 3550000000000000000000, 'Java consoles are twices as efficient', 5),
+            new Upgrade('Stack overflow', 35500000000000000000000, 'Java consoles are twice as efficient', 25),
+            new Upgrade('Enterprise compiler', 3550000000000000000000000, 'Java consoles are twice as efficient', 50),
+            new Upgrade('Syntactic sugar', 355000000000000000000000000, 'Java consoles are twice as efficient', 100),
+            new Upgrade('A nice cup of coffee', 35500000000000000000000000000, 'Java consoles are twice as efficient', 150),
+            new Upgrade('Just-in-time baking', 35500000000000000000000000000000, 'Java consoles are twice as efficient', 200),
+            new Upgrade('cookies++', 35500000000000000000000000000000000, 'Java consoles are twice as efficient', 250),
+            new Upgrade('Software updates', 35500000000000000000000000000000000000, 'Java consoles are twice as efficient', 300),
+            new Upgrade('Game.Loop', 35500000000000000000000000000000000000000, 'Java consoles are twice as efficient', 350),
+            new Upgrade('eval()', 355000000000000000000000000000000000000000000, 'Java consoles are twice as efficient', 400)
         ])
     ],
     utilities: {

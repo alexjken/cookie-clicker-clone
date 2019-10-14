@@ -7,6 +7,15 @@ h1 {
     margin-bottom:0px;
 }
 
+.stats {
+    width:250px;
+    height:250px;
+    margin:auto;
+}
+
+.stats h1 {
+    margin:0;
+}
 
 .stats ul {
     margin-top:0px;
@@ -80,7 +89,7 @@ h1 {
 }
 
 .shopList button:not(:last-child) {
-    margin-bottom:10px;
+    margin-bottom:5px;
 }
 
 .shop {
@@ -280,12 +289,36 @@ button.upgBtn:active {
 
 @media only screen and (max-width: 800px) {
     
-    .shopList button {
+    .shopList button:not(:last-child) {
         margin:auto;
+        margin-bottom:0px !important;
+        border-radius:5px 5px 0px 0px;
+    }
+
+    .shopList button:not(:first-child) {
+        border-radius:0px 0px 0px 0px;
+        border-top:none;
     }
 
     .shopList button:last-child {
+        border-radius: 0px 0px 5px 5px;
         margin-bottom:10px;
+    }
+
+    .shopList button:hover {
+        background-color:rgb(53, 112, 207);
+        box-shadow:none;
+        transform: translateY(0px);
+    }
+
+    .shopList button:active {
+        background-color:rgb(41, 94, 179);
+        box-shadow:none;
+        transform: translateY(0px);
+    }
+
+    .shopList button {
+        box-shadow:none;
     }
 
     .shopList {
